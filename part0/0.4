@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: Usuario escribe una nueva nota en el campo de texto
+
+    browser->>browser: El usuario hace clic en el botón Save
+    Note right of browser: El navegador ejecuta código JavaScript para crear un objeto nota
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes (nota en JSON)
+    activate server
+    Note right of server: El servidor recibe la nueva nota y la almacena
+    server-->>browser: 201 Created (confirmación)
+    deactivate server
+
+    Note right of browser: El navegador actualiza la vista, mostrando la nueva nota
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [lista actualizada de notas en JSON]
+    deactivate server
+
+    Note right of browser: El navegador renderiza la lista actualizada de notas
